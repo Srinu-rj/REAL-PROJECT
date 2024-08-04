@@ -3,6 +3,7 @@ package com.app.restaurant_app.serviceImpl;
 import com.app.restaurant_app.enums.USER_ROLE;
 import com.app.restaurant_app.model.User;
 import com.app.restaurant_app.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,13 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CustomeUserServiceImplementation implements UserDetailsService {
 	
-	private UserRepository userRepository;
-	
-	public CustomeUserServiceImplementation(UserRepository userRepository) {
-		this.userRepository=userRepository;
-	}
+	private final UserRepository userRepository;
+
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

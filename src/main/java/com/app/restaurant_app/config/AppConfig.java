@@ -1,6 +1,7 @@
 package com.app.restaurant_app.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class AppConfig {
 
     @Bean
@@ -25,20 +27,23 @@ public class AppConfig {
 
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
-                		.requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER","ADMIN")
-                                .requestMatchers("/api/**").authenticated()
-                                
-                                .anyRequest().permitAll()
+                        //todo /api/admin/**" -> this api only access  -> "RESTAURANT_OWNER", "ADMIN"
+                        .requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER", "ADMIN")
+                        //todo if any request start with API authenticated
+                        .requestMatchers("/api/**").authenticated()
+
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
+                //todo to connect FRENTEND APPLICATION
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
-               
-		
-		return http.build();
-		
-	}
-	
+
+
+        return http.build();
+
+    }
+
     // CORS Configuration
     private CorsConfigurationSource corsConfigurationSource() {
         return new CorsConfigurationSource() {
@@ -46,9 +51,9 @@ public class AppConfig {
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
                 cfg.setAllowedOrigins(Arrays.asList(
-                    "http://localhost:3000",
-                    "https://zosh-food.vercel.app",
-                    "http://localhost:4200"
+                        "http://localhost:3000",
+                        "https://zosh-food.vercel.app",
+                        "http://localhost:4200"
                 ));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
@@ -60,9 +65,10 @@ public class AppConfig {
         };
     }
 
+    //TODO ENCODE THE PASSWORD
     @Bean
     PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+        return new BCryptPasswordEncoder(20);
+    }
 
 }
