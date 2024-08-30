@@ -13,7 +13,6 @@ import com.app.restaurant_app.request.CreateRestaurantRequest;
 import com.app.restaurant_app.service.RestaurantService;
 import com.app.restaurant_app.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

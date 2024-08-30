@@ -17,8 +17,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin/restaurants")
 @RequiredArgsConstructor
 public class AdminRestaurantController {
-    // TODO createRestaurant ,updateRestaurant ,deleteRestaurant ,updateStataurantStatus ,findRestaurantByUserId
-    //@RequestHeader("Authorization") String jwt
+
+    // TODO createRestaurant ,
+    //  updateRestaurant ,
+    //  deleteRestaurant ,
+    //  updateStataurantStatus ,
+    //  findRestaurantByUserId
+    // todo @RequestHeader("Authorization") String jwt
+
     private final UserService userService;
     private final RestaurantService restaurantService;
 
@@ -28,16 +34,17 @@ public class AdminRestaurantController {
         //TODO IF ANY API MUST BE FAST ->FIND USER BY TOKEN
         User user = userService.findUserProfileByJwt(jwt);
         Restaurant restaurant = restaurantService.createRestaurant(request, user);
-        return new ResponseEntity<>(restaurant,HttpStatus.CREATED);
+//        return new ResponseEntity<>(restaurant,HttpStatus.CREATED);
+        return ResponseEntity.ok(restaurant);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@RequestBody CreateRestaurantRequest request,
                                                        @PathVariable Long id, @RequestHeader("Authorization") String jwt) throws UserException, RestaurantException {
         User user = userService.findUserProfileByJwt(jwt);
-        Restaurant restaurant = restaurantService.updateRestaurant(id,request);
-        return new ResponseEntity<>(restaurant,HttpStatus.CREATED);
-
+        Restaurant restaurant = restaurantService.updateRestaurant(id, request);
+//        return new ResponseEntity<>(restaurant,HttpStatus.CREATED);
+        return ResponseEntity.ok(restaurant);
     }
 
     //todo delete mapping can -> ApiResponse that will return
@@ -49,7 +56,7 @@ public class AdminRestaurantController {
         restaurantService.deleteRestaurant(restaurantId);
 
         ApiResponse apiResponse = new ApiResponse("deleted success", true);
-        return new ResponseEntity<>(apiResponse,HttpStatus.CREATED);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping("/{id}/status")
@@ -58,7 +65,7 @@ public class AdminRestaurantController {
         //todo t think no need  findUserProfileByJwt
         //todo it will used in RestaurantController
         Restaurant restaurant = restaurantService.updateRestaurantStatus(id);
-        return new ResponseEntity<>(restaurant,HttpStatus.ACCEPTED);
+        return ResponseEntity.ok(restaurant);
     }
 
     //TODO THIS API ONLY GET USERS IN RESTAURANT
@@ -68,7 +75,8 @@ public class AdminRestaurantController {
         User user = userService.findUserProfileByJwt(jwt);
         Restaurant restaurant = restaurantService.getRestaurantsByUserId(user.getId());
         //TODO RETURN THE USER ID
-        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
+//        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
+        return ResponseEntity.ok(restaurant);
     }
 
 }

@@ -53,9 +53,9 @@ public class AuthController {
         USER_ROLE role = user.getRole();
 
         User isEmailExist = userRepository.findByEmail(email);
-
+        //TODO EMAIL NOT EQUAL NULL IT WILL THOR EXCEPTION
+        // TODO THIS LOGIC MEANING EMAIL IS ALREADY IS EXITED
         if (isEmailExist != null) {
-
             throw new UserException("Email Is Already Used With Another Account");
         }
 

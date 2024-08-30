@@ -32,7 +32,8 @@ public class RestaurantController {
         User user = userService.findUserProfileByJwt(jwt);
 
         List<Restaurant> restaurants = restaurantService.searchRestaurant(keyword);
-        return new ResponseEntity<>(restaurants, HttpStatus.CREATED);
+//        return new ResponseEntity<>(restaurants, HttpStatus.CREATED);
+        return ResponseEntity.ok(restaurants);
 
     }
 
@@ -42,7 +43,7 @@ public class RestaurantController {
 
         List<Restaurant> restaurants = restaurantService.getAllRestaurant();
 
-        return new ResponseEntity<>(restaurants, HttpStatus.CREATED);
+        return ResponseEntity.ok(restaurants);
     }
 
     //todo this apis are
@@ -50,7 +51,7 @@ public class RestaurantController {
     public ResponseEntity<Restaurant> findRestaurantById(@PathVariable Long id, @RequestHeader("Authorization") String jwt) throws UserException, RestaurantException {
         User user = userService.findUserProfileByJwt(jwt);
         Restaurant restaurant = restaurantService.findRestaurantById(id);
-        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
+        return ResponseEntity.ok(restaurant);
     }
 
     //todo PUTMAPPING ->this api
@@ -60,7 +61,7 @@ public class RestaurantController {
         //todo user get jwt token  that ref used restaurant
         User user = userService.findUserProfileByJwt(jwt);
         RestaurantDto restaurantDto = restaurantService.addToFavorites(id, user);
-        return new ResponseEntity<>(restaurantDto, HttpStatus.CREATED);
+        return ResponseEntity.ok(restaurantDto);
     }
 
 

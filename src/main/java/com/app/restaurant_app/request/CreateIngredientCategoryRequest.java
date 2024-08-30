@@ -7,4 +7,6 @@ public class CreateIngredientCategoryRequest {
 
     private Long restaurantId;
     private String name;
+    private Long ingredientCategoryId;
+
 }

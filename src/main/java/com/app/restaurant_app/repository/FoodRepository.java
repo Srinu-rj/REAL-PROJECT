@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface foodRepository extends JpaRepository<Food, Long> {
+public interface FoodRepository extends JpaRepository<Food, Long> {
 
-	
+
 //	List<Food> findByRestaurantId(Long restaurantId);
 //
 //	@Query("SELECT f FROM Food f WHERE "

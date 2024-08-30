@@ -50,6 +50,7 @@ public class AppConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
+               //todo to access frontEnd apis
                 cfg.setAllowedOrigins(Arrays.asList(
                         "http://localhost:3000",
                         "https://zosh-food.vercel.app",
